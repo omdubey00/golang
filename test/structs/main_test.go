@@ -16,25 +16,25 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-
-	checkArea := func(t *testing.T, shape Shape, want float64) {
-		t.Helper()
-		got := shape.Area()
-
-		if got != want {
-			t.Errorf("got : %g , want : %g ", got, want)
-		}
+	areaTests := []struct {
+		name  string
+		shape Shape
+		want  float64
+	}{
+		{name: "Rectangle", shape: Rectangle{width: 10, height: 10}, want: 100.00},
+		{name: "Rectangle", shape: Circle{Radius: 10}, want: 314.1592653589793}, // This is we have created a list of test of same type.
+		{name: "Triangle", shape: Triangle{10, 2}, want: 10.00},
 	}
 
-	t.Run("rectangles", func(t *testing.T) {
-		rectangle := Rectangle{10, 10}
-		checkArea(t, rectangle, 100.00)
-	})
+	for _, ts := range areaTests {
+		t.Run(ts.name, func(t *testing.T) {
+			got := ts.shape.Area()
 
-	t.Run("circles", func(t *testing.T) {
-		circle := Circle{10}
-		checkArea(t, circle, 314.1592653589793)
-	})
+			if got != ts.want {
+				t.Errorf("shape : %#v ,got : %g , want : %g ", ts.shape, got, ts.want)
+			}
+		})
+	}
 }
 
 // so now I have written the bare minimum code to pass the test now refactoring will be done.
