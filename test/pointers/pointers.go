@@ -7,29 +7,28 @@ import (
 
 type Bitcoin int
 
-func (b Bitcoin) String() string {
-	return fmt.Sprintf(" %d BTC ", b)
-}
-
 type Wallet struct {
-	balance Bitcoin
+	balance Bitcoin // This is private outside this package as this is lowercase.
 }
 
-func (w *Wallet) Deposit(amount Bitcoin) {
+func (w *Wallet) Deposit(amount Bitcoin) { // these are called struct pointers and they are automatically dereferenced.
 	w.balance += amount
 }
 
-var ErrInsufficientFunds error = errors.New("insufficient balance ")
+func (w *Wallet) Balance() Bitcoin {
+	return w.balance
+}
 
-func (w *Wallet) Withdraw(amount Bitcoin) error {
-	if amount > w.balance {
-		return ErrInsufficientFunds
+var ErrInsufficinetFunds = errors.New("insufficient funds to withdraw")
+
+func (w *Wallet) Withdraw(amount Bitcoin) (err error) {
+	if amount > w.Balance() {
+		return ErrInsufficinetFunds
 	}
-
 	w.balance -= amount
 	return nil
 }
 
-func (w *Wallet) Balance() Bitcoin {
-	return (*w).balance
+func (b Bitcoin) String() string {
+	return fmt.Sprintf("%d BTC", b)
 }
