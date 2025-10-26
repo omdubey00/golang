@@ -9,3 +9,4 @@
 # Problems that we encountered 
 1. Solving the problem of shape and being able to classify all shapes as one and we used interfaces concept in go to solve those problems 
 and said that anything having Area method will be a part of shape interface thereby referring to allthe shapes as they have the Area Method defined on them.
+
