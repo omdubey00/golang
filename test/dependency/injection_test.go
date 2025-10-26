@@ -2,15 +2,17 @@ package main
 
 import (
 	"bytes"
+	"os"
 	"testing"
 )
 
 func TestGreet(t *testing.T) {
+
 	buffer := bytes.Buffer{}
-	Greet(&buffer, "theriddler")
+	Greet(os.Stdout, "theriddler")
 
 	got := buffer.String()
-	want := "Hello , theriddler"
+	want := "theriddler"
 
 	if got != want {
 		t.Errorf("got : %q , want : %q ", got, want)
